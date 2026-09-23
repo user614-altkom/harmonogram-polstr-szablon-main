@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: API harmonogramu spłat POLSTR
+  version: 1.0.0
+paths:
+  /api/harmonogram:
+    get:
+      summary: Oblicza harmonogram spłat kredytu
+      operationId: pobierzHarmonogram
+      parameters:
+        - name: kwota
+          in: query
+          required: true
+          description: Kwota kredytu w złotych.
+          schema:
+            type: number
+            exclusiveMinimum: 0
+          example: 400000
+        - name: liczbaRat
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          example: 300
+        - name: pierwszaRata
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          example: 2026-10-01
+        - name: marza
+          in: query
+          required: true
+          description: Marża w punktach procentowych.
+          schema:
+            type: number
+            minimum: 0
+          example: 2.11
+        - name: wskaznik
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Wskaznik'
+        - name: typRat
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/TypRat'
+        - name: nadplaty
+          in: query
+          required: false
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NadplataWejscie'
+              example:
+                - miesiac: 12
+                  kwota: 10000
+                  tryb: obniz_rate
+      responses:
+        '200':
+          description: Poprawnie obliczony harmonogram.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Harmonogram'
+        '400':
+          description: Niepoprawne albo niespójne dane wejściowe.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blad'
+components:
+  schemas:
+    Wskaznik:
+      type: string
+      enum: [POLSTR_1M, WIBOR_3M]
+    TypRat:
+      type: string
+      enum: [rowne, malejace]
+    TrybNadplaty:
+      type: string
+      enum: [obniz_rate, skroc_okres]
+    NadplataWejscie:
+      type: object
+      additionalProperties: false
+      required: [miesiac, kwota, tryb]
+      properties:
+        miesiac:
+          type: integer
+          minimum: 1
+        kwota:
+          type: number
+          exclusiveMinimum: 0
+          description: Kwota nadpłaty w złotych.
+        tryb:
+          $ref: '#/components/schemas/TrybNadplaty'
+    Rata:
+      type: object
+      additionalProperties: false
+      required: [numer, data, kapitalGr, nadplataGr, odsetkiGr, rataGr, saldoGr, stopaRoczna]
+      properties:
+        numer:
+          type: integer
+          minimum: 1
+        data:
+          type: string
+          format: date
+        kapitalGr:
+          type: integer
+          minimum: 0
+        nadplataGr:
+          type: integer
+          minimum: 0
+        odsetkiGr:
+          type: integer
+          minimum: 0
+        rataGr:
+          type: integer
+          minimum: 0
+        saldoGr:
+          type: integer
+          minimum: 0
+        stopaRoczna:
+          type: number
+          minimum: 0
+    Harmonogram:
+      type: object
+      additionalProperties: false
+      required: [raty, sumaOdsetekGr]
+      properties:
+        raty:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Rata'
+        sumaOdsetekGr:
+          type: integer
+          minimum: 0
+    Blad:
+      type: object
+      required: [blad]
+      properties:
+        blad:
+          type: string
+        przyklad:
+          type: string
