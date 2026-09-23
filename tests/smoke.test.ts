@@ -17,9 +17,9 @@ describe('dane wskaźników z katalogu dane/', () => {
 });
 
 describe('domena', () => {
-  it('policzHarmonogram jest szkieletem i zgłasza brak implementacji', () => {
-    expect(() =>
-      policzHarmonogram({
+  it('policzHarmonogram zwraca harmonogram dla poprawnych parametrów', () => {
+    const harmonogram = policzHarmonogram(
+      {
         kwotaGr: 400_000_00,
         liczbaRat: 300,
         marza: 0.0211,
@@ -27,8 +27,12 @@ describe('domena', () => {
         wskaznik: 'POLSTR_1M',
         pierwszaRata: '2026-10-01',
         nadplaty: [],
-      }),
-    ).toThrow('nie zaimplementowano');
+      },
+      [{ od: '2026-10-01', stopa: 0.0355 }],
+    );
+
+    expect(harmonogram.raty.length).toBe(300);
+    expect(harmonogram.raty.at(-1)?.saldoGr).toBe(0);
   });
 
   it('testy działają w strefie Europe/Warsaw', () => {

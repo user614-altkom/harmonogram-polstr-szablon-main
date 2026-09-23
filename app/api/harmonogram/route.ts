@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { seriaWskaznika } from '../../../src/dane/wskazniki';
 import { policzHarmonogram, type ParametryKredytu } from '../../../src/domena/harmonogram';
 
 // Route handler jest cienki: parsuje parametry z query string, woła domenę, zwraca JSON.
@@ -15,6 +16,7 @@ function parsujParametry(szukane: URLSearchParams): ParametryKredytu | string {
   const wskaznik = szukane.get('wskaznik');
   const typRat = szukane.get('typRat');
   const pierwszaRata = szukane.get('pierwszaRata') ?? '';
+  const nadplatyTekst = szukane.get('nadplaty');
 
   if (!Number.isFinite(kwota) || kwota <= 0) return 'kwota: liczba dodatnia w złotych, np. 400000';
   if (!Number.isInteger(liczbaRat) || liczbaRat <= 0) return 'liczbaRat: liczba całkowita dodatnia, np. 300';
@@ -22,6 +24,17 @@ function parsujParametry(szukane: URLSearchParams): ParametryKredytu | string {
   if (wskaznik !== 'POLSTR_1M' && wskaznik !== 'WIBOR_3M') return 'wskaznik: POLSTR_1M albo WIBOR_3M';
   if (typRat !== 'rowne' && typRat !== 'malejace') return 'typRat: rowne albo malejace';
   if (!/^\d{4}-\d{2}-\d{2}$/.test(pierwszaRata)) return 'pierwszaRata: data YYYY-MM-DD';
+  if (nadplatyTekst !== null) {
+    let nadplaty: unknown;
+    try {
+      nadplaty = JSON.parse(nadplatyTekst);
+    } catch {
+      return 'nadplaty: poprawna tablica JSON';
+    }
+    if (!Array.isArray(nadplaty) || nadplaty.length > 0) {
+      return 'nadplaty: obsługa będzie dostępna w Fazie 5';
+    }
+  }
 
   return {
     kwotaGr: Math.round(kwota * 100),
@@ -41,7 +54,7 @@ export function GET(request: Request) {
   }
 
   try {
-    const harmonogram = policzHarmonogram(parametry);
+    const harmonogram = policzHarmonogram(parametry, seriaWskaznika(parametry.wskaznik));
     return NextResponse.json(harmonogram);
   } catch (blad) {
     const komunikat = blad instanceof Error ? blad.message : String(blad);
