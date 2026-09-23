@@ -49,15 +49,16 @@ pokaż diff i przeprowadź review przed fazą 3.
 
 **Test niezależny**: Dla 40 000 000 gr, 300 rat, stałego wskaźnika `0.0355` i marży
 `0.0211` pierwsza rata wynosi 249 472 gr z tolerancją 5 gr, ostatnia 249 253 gr, suma
-- [ ] T004 [P] [US1] Napisz nieprzechodzące testy odrzucenia niedodatniej kwoty i liczby rat, ujemnej albo nieskończonej marży, nieistniejącej daty oraz generowania końców miesięcy w UTC w `tests/harmonogram-walidacja.test.ts`
+- [X] T004 [P] [US1] Napisz nieprzechodzące testy odrzucenia niedodatniej kwoty i liczby rat, ujemnej albo nieskończonej marży, nieistniejącej daty oraz generowania końców miesięcy w UTC w `tests/harmonogram-walidacja.test.ts`
+- [X] T003 [P] [US1] Napisz nieprzechodzące testy liczby kontrolnej, zerowej stopy, raty wyrównującej i sumy kapitału w `tests/harmonogram-rowne.test.ts`
 
 ### Implementacja historii 1
 
-- [ ] T005 [US1] Zaimplementuj walidację parametrów oraz deterministyczne wyznaczanie miesięcznych dat z ograniczeniem do ostatniego dnia miesiąca w `src/domena/harmonogram.ts`
-- [ ] T006 [US1] Zaimplementuj raty równe dla stałej serii, odsetki `round(saldo * stopaRoczna / 12)`, jednorazowe zaokrąglanie do grosza i ostatnią ratę wyrównującą w `src/domena/harmonogram.ts`
-- [ ] T006a [US1] Zaktualizuj `tests/smoke.test.ts`, zastępując oczekiwanie wyjątku `nie zaimplementowano` asercją wyniku działającego `policzHarmonogram` albo usuń ten przestarzały test
-- [ ] T007 [US1] Zaimplementuj bazowy kontrakt GET: konwersję złotych na grosze i punktów procentowych na ułamek, pobranie serii i przekazanie jej jako argumentu do domeny, wywołanie domeny oraz odpowiedzi 200/400 zgodne z `contracts/openapi.yaml` w `app/api/harmonogram/route.ts`
-- [ ] T008 [US1] Wykonaj scenariusze liczby kontrolnej i błędów wejścia opisane w `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
+- [X] T005 [US1] Zaimplementuj walidację parametrów oraz deterministyczne wyznaczanie miesięcznych dat z ograniczeniem do ostatniego dnia miesiąca w `src/domena/harmonogram.ts`
+- [X] T006 [US1] Zaimplementuj raty równe dla stałej serii, odsetki `round(saldo * stopaRoczna / 12)`, jednorazowe zaokrąglanie do grosza i ostatnią ratę wyrównującą w `src/domena/harmonogram.ts`
+- [X] T006a [US1] Zaktualizuj `tests/smoke.test.ts`, zastępując oczekiwanie wyjątku `nie zaimplementowano` asercją wyniku działającego `policzHarmonogram` albo usuń ten przestarzały test
+- [X] T007 [US1] Zaimplementuj bazowy kontrakt GET: konwersję złotych na grosze i punktów procentowych na ułamek, pobranie serii i przekazanie jej jako argumentu do domeny, wywołanie domeny oraz odpowiedzi 200/400 zgodne z `contracts/openapi.yaml` w `app/api/harmonogram/route.ts`
+- [X] T008 [US1] Wykonaj scenariusze liczby kontrolnej i błędów wejścia opisane w `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
 
 **Punkt kontrolny**: Historia 1 działa samodzielnie jako MVP; zakończ fazę, pokaż diff i
 przeprowadź review przed rozpoczęciem historii P2.
