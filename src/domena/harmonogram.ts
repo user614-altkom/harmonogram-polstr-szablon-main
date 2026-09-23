@@ -107,9 +107,6 @@ function zwalidujParametry(parametry: ParametryKredytu, seria: WpisSerii[]): Dat
   if (!Number.isFinite(parametry.marza) || parametry.marza < 0) {
     throw new Error('marza: skończona liczba nieujemna');
   }
-  if (parametry.typRat !== 'rowne') {
-    throw new Error('typRat: w Fazie 3 obsługiwane są wyłącznie raty rowne');
-  }
   if (parametry.nadplaty.length > 0) {
     throw new Error('nadplaty: obsługa nadpłat będzie dostępna w Fazie 5');
   }
@@ -173,13 +170,14 @@ export function policzHarmonogram(parametry: ParametryKredytu, seria: WpisSerii[
     const data = dataRaty(pierwszaRata, numer - 1);
     const stopaRoczna = stopaDlaDaty(seria, data) + parametry.marza;
     const odsetkiGr = zaokraglijGrosze((saldoGr * stopaRoczna) / 12);
-    if (planowanaRataGr === undefined || poprzedniaStopa !== stopaRoczna) {
+    if (parametry.typRat === 'rowne' && (planowanaRataGr === undefined || poprzedniaStopa !== stopaRoczna)) {
       planowanaRataGr = rataRowna(saldoGr, stopaRoczna, parametry.liczbaRat - numer + 1);
     }
     poprzedniaStopa = stopaRoczna;
-    const kapitalGr = numer === parametry.liczbaRat
-      ? saldoGr
-      : Math.min(saldoGr, Math.max(0, planowanaRataGr - odsetkiGr));
+    const pozostaleRaty = parametry.liczbaRat - numer + 1;
+    const kapitalGr = parametry.typRat === 'malejace'
+      ? (numer === parametry.liczbaRat ? saldoGr : Math.min(saldoGr, zaokraglijGrosze(saldoGr / pozostaleRaty)))
+      : (numer === parametry.liczbaRat ? saldoGr : Math.min(saldoGr, Math.max(0, (planowanaRataGr ?? 0) - odsetkiGr)));
     const rataGr = kapitalGr + odsetkiGr;
     saldoGr -= kapitalGr;
     raty.push({ numer, data, kapitalGr, nadplataGr: 0, odsetkiGr, rataGr, saldoGr, stopaRoczna });
