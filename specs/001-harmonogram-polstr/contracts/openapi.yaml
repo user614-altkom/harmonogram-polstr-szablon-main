@@ -51,10 +51,16 @@ paths:
         - name: nadplaty
           in: query
           required: false
-          description: Tablica nadpłat jako JSON zakodowany w query string.
-          schema:
-            type: string
-          example: '[{"miesiac":12,"kwota":10000,"tryb":"obniz_rate"}]'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NadplataWejscie'
+              example:
+                - miesiac: 12
+                  kwota: 10000
+                  tryb: obniz_rate
       responses:
         '200':
           description: Poprawnie obliczony harmonogram.
