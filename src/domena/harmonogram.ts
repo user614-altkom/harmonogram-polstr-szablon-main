@@ -107,8 +107,16 @@ function zwalidujParametry(parametry: ParametryKredytu, seria: WpisSerii[]): Dat
   if (!Number.isFinite(parametry.marza) || parametry.marza < 0) {
     throw new Error('marza: skończona liczba nieujemna');
   }
-  if (parametry.nadplaty.length > 0) {
-    throw new Error('nadplaty: obsługa nadpłat będzie dostępna w Fazie 5');
+  for (const nadplata of parametry.nadplaty) {
+    if (!Number.isInteger(nadplata.miesiac) || nadplata.miesiac < 1 || nadplata.miesiac > parametry.liczbaRat) {
+      throw new Error('nadplaty.miesiac: numer raty poza harmonogramem');
+    }
+    if (!Number.isInteger(nadplata.kwotaGr) || nadplata.kwotaGr <= 0) {
+      throw new Error('nadplaty.kwotaGr: dodatnia liczba całkowita');
+    }
+    if (nadplata.tryb !== 'obniz_rate' && nadplata.tryb !== 'skroc_okres') {
+      throw new Error('nadplaty.tryb: obniz_rate albo skroc_okres');
+    }
   }
 
   const pierwszaRata = utworzDate(parametry.pierwszaRata);
@@ -165,6 +173,7 @@ export function policzHarmonogram(parametry: ParametryKredytu, seria: WpisSerii[
   const raty: Rata[] = [];
   let poprzedniaStopa: number | undefined;
   let planowanaRataGr: number | undefined;
+  let planowanyKapitalGr: number | undefined;
 
   for (let numer = 1; numer <= parametry.liczbaRat; numer += 1) {
     const data = dataRaty(pierwszaRata, numer - 1);
@@ -175,12 +184,35 @@ export function policzHarmonogram(parametry: ParametryKredytu, seria: WpisSerii[
     }
     poprzedniaStopa = stopaRoczna;
     const pozostaleRaty = parametry.liczbaRat - numer + 1;
-    const kapitalGr = parametry.typRat === 'malejace'
-      ? (numer === parametry.liczbaRat ? saldoGr : Math.min(saldoGr, zaokraglijGrosze(saldoGr / pozostaleRaty)))
+    const nadplatyWOkresie = parametry.nadplaty.filter((nadplata) => nadplata.miesiac === numer);
+    const czySkracaćOkres = nadplatyWOkresie.some((nadplata) => nadplata.tryb === 'skroc_okres') || planowanyKapitalGr !== undefined;
+    const kapitalPlanowanyGr = parametry.typRat === 'malejace'
+      ? (numer === parametry.liczbaRat
+        ? saldoGr
+        : Math.min(saldoGr, czySkracaćOkres && planowanyKapitalGr !== undefined
+          ? planowanyKapitalGr
+          : zaokraglijGrosze(saldoGr / pozostaleRaty)))
       : (numer === parametry.liczbaRat ? saldoGr : Math.min(saldoGr, Math.max(0, (planowanaRataGr ?? 0) - odsetkiGr)));
+    if (czySkracaćOkres && planowanyKapitalGr === undefined && parametry.typRat === 'malejace') {
+      planowanyKapitalGr = kapitalPlanowanyGr;
+    }
+    const kapitalPrzedNadplataGr = kapitalPlanowanyGr;
+    saldoGr -= kapitalPrzedNadplataGr;
+    let nadplataGr = 0;
+    for (const nadplata of nadplatyWOkresie) {
+      const efektywnaNadplataGr = Math.min(saldoGr, nadplata.kwotaGr);
+      saldoGr -= efektywnaNadplataGr;
+      nadplataGr += efektywnaNadplataGr;
+      if (nadplata.tryb === 'obniz_rate') {
+        planowanaRataGr = undefined;
+        planowanyKapitalGr = undefined;
+      } else if (parametry.typRat === 'malejace' && planowanyKapitalGr === undefined) {
+        planowanyKapitalGr = kapitalPrzedNadplataGr;
+      }
+    }
+    const kapitalGr = kapitalPrzedNadplataGr + nadplataGr;
     const rataGr = kapitalGr + odsetkiGr;
-    saldoGr -= kapitalGr;
-    raty.push({ numer, data, kapitalGr, nadplataGr: 0, odsetkiGr, rataGr, saldoGr, stopaRoczna });
+    raty.push({ numer, data, kapitalGr, nadplataGr, odsetkiGr, rataGr, saldoGr, stopaRoczna });
     if (saldoGr === 0) break;
   }
 
