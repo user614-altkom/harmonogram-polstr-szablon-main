@@ -6,11 +6,11 @@ Pracujesz sam, w swoim prywatnym repo, w VS Code z Copilotem (tryb Agent) albo w
 
 ### Bramka 0, do 12:10: repo i produkcja działają
 
-- [ ] szablon sklonowany, `gh repo create harmonogram-polstr --private --source . --remote origin --push` wykonane
-- [ ] `gh run list` pokazuje zielony workflow „Testy” (jeśli Actions są wyłączone w organizacji, pomiń)
-- [ ] lokalnie `npm install`, `npm test`, `npm run typecheck` zielone, `npm run dev` pokazuje szkielet na http://localhost:3000
-- [ ] konto Vercel przez „Continue with GitHub”, import repo `harmonogram-polstr`, pierwszy deploy zielony, adres `https://harmonogram-polstr-….vercel.app` pokazuje szkielet
-- [ ] sprawdź, że przy tworzeniu PR w www lista Reviewers zawiera Copilota; jeśli nie, powiedz prowadzącemu, użyjesz rutyny `skrypty/review-pr.ps1`
+- [x] szablon sklonowany, `gh repo create harmonogram-polstr --private --source . --remote origin --push` wykonane
+- [x] `gh run list` pokazuje zielony workflow „Testy” (jeśli Actions są wyłączone w organizacji, pomiń)
+- [x] lokalnie `npm install`, `npm test`, `npm run typecheck` zielone, `npm run dev` pokazuje szkielet na http://localhost:3000
+- [x] konto Vercel przez „Continue with GitHub”, import repo `harmonogram-polstr`, pierwszy deploy zielony, adres `https://vercel-harmonogram-polstr-szablon-m.vercel.app/` pokazuje szkielet
+- [x] sprawdź, że przy tworzeniu PR w www lista Reviewers zawiera Copilota; jeśli nie, powiedz prowadzącemu, użyjesz rutyny `skrypty/review-pr.ps1`
 
 ### Bramka 1, do 14:00: artefakty spec-kit i pierwszy PR
 
