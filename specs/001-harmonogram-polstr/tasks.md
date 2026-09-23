@@ -89,14 +89,14 @@ harmonogram bez wartości ujemnych.
 
 ### Testy historii 3
 
-- [ ] T014 [P] [US3] Napisz nieprzechodzące testy trybu `obniz_rate`, pustej listy i wielu nadpłat w jednym miesiącu stosowanych w kolejności wejściowej w `tests/nadplaty-obnizenie.test.ts`
-- [ ] T015 [P] [US3] Napisz nieprzechodzące testy trybu `skroc_okres`, nadpłaty większej od salda, sumy `kapitalGr` równej `kwotaGr` oraz nieujemnego salda w `tests/nadplaty-skrocenie.test.ts`
+- [X] T014 [P] [US3] Napisz nieprzechodzące testy trybu `obniz_rate`, pustej listy i wielu nadpłat w jednym miesiącu stosowanych w kolejności wejściowej w `tests/nadplaty-obnizenie.test.ts`
+- [X] T015 [P] [US3] Napisz nieprzechodzące testy trybu `skroc_okres`, nadpłaty większej od salda, sumy `kapitalGr` równej `kwotaGr` oraz nieujemnego salda w `tests/nadplaty-skrocenie.test.ts`
 
 ### Implementacja historii 3
 
-- [ ] T016 [US3] Zaimplementuj stosowanie nadpłat po planowanej racie, ograniczenie do salda, `nadplataGr` jako część `kapitalGr`, przeliczenie raty przy zachowaniu terminu i skrócenie liczby okresów w `src/domena/harmonogram.ts`
-- [ ] T017 [US3] Zaimplementuj parsowanie parametru `nadplaty` jako tablicy JSON, konwersję dodatnich kwot ze złotych na grosze i komunikaty dla niepoprawnego miesiąca, kwoty lub trybu w `app/api/harmonogram/route.ts`
-- [ ] T018 [US3] Wykonaj oba scenariusze nadpłat i przypadek nadpłaty ponad saldo z `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
+- [X] T016 [US3] Zaimplementuj stosowanie nadpłat po planowanej racie, ograniczenie do salda, `nadplataGr` jako część `kapitalGr`, przeliczenie raty przy zachowaniu terminu i skrócenie liczby okresów w `src/domena/harmonogram.ts`
+- [X] T017 [US3] Zaimplementuj parsowanie parametru `nadplaty` jako tablicy JSON, konwersję dodatnich kwot ze złotych na grosze i komunikaty dla niepoprawnego miesiąca, kwoty lub trybu w `app/api/harmonogram/route.ts`
+- [X] T018 [US3] Wykonaj oba scenariusze nadpłat i przypadek nadpłaty ponad saldo z `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
 
 ---
 
