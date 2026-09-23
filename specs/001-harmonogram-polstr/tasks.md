@@ -41,6 +41,7 @@ pokaż diff i przeprowadź review przed fazą 2.
 ukończeniem tej fazy.
 
 - [ ] T002 Zdefiniuj w `src/domena/harmonogram.ts` typy `ParametryKredytu`, `WpisSerii`, `Nadplata`, `Rata` i `Harmonogram` z regułami: `kwotaGr` i `liczbaRat` to dodatnie liczby całkowite; `pierwszaRata` oraz `od` to istniejące daty `YYYY-MM-DD`; wpisy serii są rosnące bez duplikatów; `marza` i `stopa` to skończone liczby nieujemne jako ułamki; `typRat` to `rowne` albo `malejace`; `wskaznik` to `POLSTR_1M` albo `WIBOR_3M`; `nadplaty` domyślnie są pustą listą; `miesiac` jest od 1 do `liczbaRat`; `kwotaGr` nadpłaty jest dodatnią liczbą całkowitą; `tryb` to `obniz_rate` albo `skroc_okres`; `numer` raty rośnie od 1 bez luk; `kapitalGr`, `nadplataGr`, `odsetkiGr`, `rataGr`, `saldoGr` i `sumaOdsetekGr` są nieujemnymi całkowitymi groszami; `rataGr = kapitalGr + odsetkiGr`; `stopaRoczna` jest nieujemnym ułamkiem; lista `raty` ma co najmniej jeden element dla poprawnych parametrów
+- [ ] T002a Zaktualizuj fixture domeny w `tests/smoke.test.ts`, przekazując wymagane `nadplaty: []` zgodnie z typem `ParametryKredytu`
 
 **Punkt kontrolny**: Kontrakty TypeScript odzwierciedlają `data-model.md`; zakończ fazę,
 pokaż diff i przeprowadź review przed fazą 3.
@@ -64,6 +65,7 @@ kapitału wynosi 40 000 000 gr, a saldo końcowe 0.
 
 - [ ] T005 [US1] Zaimplementuj walidację parametrów oraz deterministyczne wyznaczanie miesięcznych dat z ograniczeniem do ostatniego dnia miesiąca w `src/domena/harmonogram.ts`
 - [ ] T006 [US1] Zaimplementuj raty równe dla stałej serii, odsetki `round(saldo * stopaRoczna / 12)`, jednorazowe zaokrąglanie do grosza i ostatnią ratę wyrównującą w `src/domena/harmonogram.ts`
+- [ ] T006a [US1] Zaktualizuj `tests/smoke.test.ts`, zastępując oczekiwanie wyjątku `nie zaimplementowano` asercją wyniku działającego `policzHarmonogram` albo usuń ten przestarzały test
 - [ ] T007 [US1] Zaimplementuj bazowy kontrakt GET: konwersję złotych na grosze i punktów procentowych na ułamek, pobranie serii i przekazanie jej jako argumentu do domeny, wywołanie domeny oraz odpowiedzi 200/400 zgodne z `contracts/openapi.yaml` w `app/api/harmonogram/route.ts`
 - [ ] T008 [US1] Wykonaj scenariusze liczby kontrolnej i błędów wejścia opisane w `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
 
