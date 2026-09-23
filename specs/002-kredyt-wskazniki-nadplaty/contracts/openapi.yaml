@@ -1,0 +1,132 @@
+openapi: 3.0.3
+info:
+  title: Harmonogram kredytu hipotecznego
+  version: 1.1.0
+  description: >-
+    Kontrakt API dla kalkulatora harmonogramu z nadpłatami, rekompensatą art. 40
+    oraz konwersją wskaźnika WIBOR / POLSTR.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/harmonogram:
+    get:
+      summary: Oblicza harmonogram kredytu dla podanych parametrów
+      parameters:
+        - in: query
+          name: kwota
+          required: true
+          schema:
+            type: number
+          description: Kwota kredytu w złotych
+        - in: query
+          name: liczbaRat
+          required: true
+          schema:
+            type: integer
+          description: Liczba rat w harmonogramie
+        - in: query
+          name: marza
+          required: true
+          schema:
+            type: number
+          description: Marża w punktach procentowych, np. 2.11
+        - in: query
+          name: wskaznik
+          required: true
+          schema:
+            type: string
+            enum: [POLSTR_1M, WIBOR_3M]
+        - in: query
+          name: typRat
+          required: true
+          schema:
+            type: string
+            enum: [rowne, malejace]
+        - in: query
+          name: pierwszaRata
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: nadplaty
+          required: false
+          schema:
+            type: string
+          description: >-
+            Lista nadpłat jako JSON. Każdy element zawiera: miesiac, kwota, tryb.
+        - in: query
+          name: konwersja
+          required: false
+          schema:
+            type: string
+          description: >-
+            Konfiguracja konwersji jako JSON z polami: odRaty lub odDaty, nowyWskaznik,
+            spreadPp, seriaWskaznika.
+      responses:
+        '200':
+          description: Prawidłowy wynik harmonogramu
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  raty:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Rata'
+                  sumaOdsetekGr:
+                    type: integer
+                  sumaRekompensatGr:
+                    type: integer
+                  saldoKoncoweGr:
+                    type: integer
+        '400':
+          description: Błąd walidacji parametrów wejściowych
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Rata:
+      type: object
+      required:
+        - numer
+        - data
+        - kapitalGr
+        - odsetkiGr
+        - rataGr
+        - saldoGr
+        - stopaRoczna
+      properties:
+        numer:
+          type: integer
+        data:
+          type: string
+          format: date
+        kapitalGr:
+          type: integer
+        odsetkiGr:
+          type: integer
+        rataGr:
+          type: integer
+        saldoGr:
+          type: integer
+        stopaRoczna:
+          type: number
+        nadplataGr:
+          type: integer
+        rekompensataGr:
+          type: integer
+        wskaznikPoKonwersji:
+          type: boolean
+    ErrorResponse:
+      type: object
+      required:
+        - blad
+      properties:
+        blad:
+          type: string
+        przyklad:
+          type: string
