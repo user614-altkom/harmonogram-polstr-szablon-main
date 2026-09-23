@@ -1,1 +1,90 @@
 @import "tailwindcss";
+
+:root {
+	--papier: #f4f0e8;
+	--atrament: #1c1917;
+	--limonka: #d9f99d;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--papier);
+	color: var(--atrament);
+	background-image: linear-gradient(rgba(28, 25, 23, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(28, 25, 23, 0.035) 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+
+button,
+input,
+select {
+	font: inherit;
+}
+
+.pole {
+	width: 100%;
+	border: 1px solid #44403c;
+	border-radius: 0.65rem;
+	background: #292524;
+	padding: 0.7rem 0.8rem;
+	color: #fafaf9;
+	outline: none;
+}
+
+.pole:focus {
+	border-color: var(--limonka);
+	box-shadow: 0 0 0 2px rgba(217, 249, 157, 0.18);
+}
+
+.pole-male {
+	padding: 0.55rem 0.65rem;
+	font-size: 0.8rem;
+}
+
+.tryb {
+	border: 1px solid #44403c;
+	border-radius: 0.65rem;
+	padding: 0.65rem 0.5rem;
+	color: #a8a29e;
+	font-size: 0.78rem;
+	font-weight: 700;
+}
+
+.tryb:hover,
+.tryb-aktywny {
+	border-color: var(--limonka);
+	background: rgba(217, 249, 157, 0.1);
+	color: var(--limonka);
+}
+
+.metryka {
+	display: flex;
+	min-height: 116px;
+	flex-direction: column;
+	justify-content: space-between;
+	border: 1px solid #d6d3d1;
+	border-radius: 1rem;
+	background: rgba(255, 255, 255, 0.72);
+	padding: 1rem;
+}
+
+.metryka span {
+	color: #78716c;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.metryka strong {
+	color: #1c1917;
+	font-family: Georgia, serif;
+	font-size: 1.35rem;
+}
+
+.metryka-akcent {
+	border-color: #86efac;
+	background: #ecfdf5;
+}
