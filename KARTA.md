@@ -14,8 +14,8 @@ Pracujesz sam, w swoim prywatnym repo, w VS Code z Copilotem (tryb Agent) albo w
 
 ### Bramka 1, do 14:00: artefakty spec-kit i pierwszy PR
 
-- [ ] `.specify/memory/constitution.md` wypełniony
-- [ ] `specs/001-*/spec.md`, `plan.md`, `tasks.md` w repo
+- [x] `.specify/memory/constitution.md` wypełniony
+- [x] `specs/001-*/spec.md`, `plan.md`, `tasks.md` w repo
 - [ ] PR #1 z artefaktami, Copilot jako recenzent, komentarz bota Vercel z adresem podglądu, review przeczytane, PR scalony
 
 ### Bramka 2, do 15:00: MVP na produkcji
