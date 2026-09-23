@@ -26,7 +26,7 @@ niezależną walidacją oraz osobnym pull requestem i review przed przejściem d
 
 **Cel**: Potwierdzenie działającego punktu startowego bez zmiany zależności.
 
-- [ ] T001 Uruchom bazowe `npm test`, `npm run typecheck` i `npm run build`, a wynik odnotuj w opisie PR na podstawie skryptów z `./package.json`
+- [X] T001 Uruchom bazowe `npm test`, `npm run typecheck` i `npm run build`, a wynik odnotuj w opisie PR na podstawie skryptów z `./package.json`
 
 **Punkt kontrolny**: Istniejący szkielet przechodzi trzy bramki jakości; zakończ fazę,
 pokaż diff i przeprowadź review przed fazą 2.
