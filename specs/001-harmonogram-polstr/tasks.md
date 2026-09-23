@@ -106,9 +106,9 @@ harmonogram bez wartości ujemnych.
 
 **Test niezależny**: Dla gotowej odpowiedzi API ekran pokazuje pierwszą i ostatnią ratę,
 
-- [ ] T019 [US4] Zaimplementuj w `app/page.tsx` komponent `'use client'` z formularzem wszystkich parametrów i nadpłat, `URLSearchParams`, pobieraniem `/api/harmonogram`, stanami ładowania i błędu, podsumowaniem oraz responsywną tabelą bez biblioteki UI
-- [ ] T020 [US4] Zaimplementuj w `app/page.tsx` eksport aktualnego wyniku do CSV przez `Blob`, z polskimi nagłówkami, wszystkimi wymaganymi kolumnami i wszystkimi ratami w kolejności harmonogramu
-- [ ] T021 [US4] Wykonaj scenariusz prezentacji i CSV na szerokości desktopowej oraz mobilnej z `specs/001-harmonogram-polstr/quickstart.md` i odnotuj zgodność liczby wierszy w opisie PR
+- [X] T019 [US4] Zaimplementuj w `app/page.tsx` komponent `'use client'` z formularzem wszystkich parametrów i nadpłat, `URLSearchParams`, pobieraniem `/api/harmonogram`, stanami ładowania i błędu, podsumowaniem oraz responsywną tabelą bez biblioteki UI
+- [X] T020 [US4] Zaimplementuj w `app/page.tsx` eksport aktualnego wyniku do CSV przez `Blob`, z polskimi nagłówkami, wszystkimi wymaganymi kolumnami i wszystkimi ratami w kolejności harmonogramu
+- [X] T021 [US4] Wykonaj scenariusz prezentacji i CSV na szerokości desktopowej oraz mobilnej z `specs/001-harmonogram-polstr/quickstart.md` i odnotuj zgodność liczby wierszy w opisie PR
 **Punkt kontrolny**: Pełny zakres MVP działa end-to-end; zakończ fazę, pokaż diff i
 przeprowadź review przed pracami przekrojowymi.
 
