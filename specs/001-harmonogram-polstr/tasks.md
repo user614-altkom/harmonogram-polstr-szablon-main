@@ -70,14 +70,14 @@ przeprowadź review przed rozpoczęciem historii P2.
 
 ### Testy historii 2
 
-- [ ] T009 [P] [US2] Napisz nieprzechodzące testy wyboru ostatniego wpisu `od <= data raty`, użycia ostatniej wartości po końcu serii, błędu przed początkiem serii oraz niezmienności danych w `tests/wskazniki.test.ts`
-- [ ] T010 [P] [US2] Napisz nieprzechodzące testy rat malejących i zmiany wskaźnika dokładnie w dniu raty, z liczbami kontrolnymi dla kapitału, odsetek i salda w `tests/harmonogram-zmienne.test.ts`
+- [X] T009 [P] [US2] Napisz nieprzechodzące testy wyboru ostatniego wpisu `od <= data raty`, użycia ostatniej wartości po końcu serii, błędu przed początkiem serii oraz niezmienności danych w `tests/wskazniki.test.ts`
+- [X] T010 [P] [US2] Napisz nieprzechodzące testy rat malejących i zmiany wskaźnika dokładnie w dniu raty, z liczbami kontrolnymi dla kapitału, odsetek i salda w `tests/harmonogram-zmienne.test.ts`
 
 ### Implementacja historii 2
 
-- [ ] T011 [US2] Zaimplementuj walidację uporządkowania serii i wybór wartości obowiązującej dla daty, bez mutowania importowanych tablic JSON, w `src/dane/wskazniki.ts`
-- [ ] T012 [US2] Zaimplementuj przeliczanie rat równych przy zmianie stopy oraz raty malejące z częścią kapitałową `round(saldo / pozostaleRaty)` i wyrównaniem ostatniej raty w `src/domena/harmonogram.ts`
-- [ ] T013 [US2] Wykonaj scenariusze endpointu, zmiany wskaźnika i rat malejących opisane w `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
+- [X] T011 [US2] Zaimplementuj walidację uporządkowania serii i wybór wartości obowiązującej dla daty, bez mutowania importowanych tablic JSON, w `src/dane/wskazniki.ts`
+- [X] T012 [US2] Zaimplementuj przeliczanie rat równych przy zmianie stopy oraz raty malejące z częścią kapitałową `round(saldo / pozostaleRaty)` i wyrównaniem ostatniej raty w `src/domena/harmonogram.ts`
+- [X] T013 [US2] Wykonaj scenariusze endpointu, zmiany wskaźnika i rat malejących opisane w `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
 
 **Punkt kontrolny**: Oba typy rat i oba wskaźniki są testowalne niezależnie od nadpłat;
 zakończ fazę, pokaż diff i przeprowadź review.
