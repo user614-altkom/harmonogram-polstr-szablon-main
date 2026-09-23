@@ -26,6 +26,7 @@ describe('domena', () => {
         typRat: 'rowne',
         wskaznik: 'POLSTR_1M',
         pierwszaRata: '2026-10-01',
+        nadplaty: [],
       }),
     ).toThrow('nie zaimplementowano');
   });

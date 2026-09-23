@@ -16,6 +16,36 @@ export interface ParametryKredytu {
   wskaznik: 'POLSTR_1M' | 'WIBOR_3M';
   /** Data pierwszej raty w formacie YYYY-MM-DD. */
   pierwszaRata: string;
+  nadplaty: Nadplata[];
+}
+
+export interface WpisSerii {
+  /** Dzień, od którego obowiązuje wartość, YYYY-MM-DD. */
+  od: string;
+  /** Stopa jako nieujemny ułamek roczny. */
+  stopa: number;
+}
+
+export interface Nadplata {
+  miesiac: number;
+  kwotaGr: number;
+  tryb: 'obniz_rate' | 'skroc_okres';
+}
+
+export interface Rata {
+  numer: number;
+  data: string;
+  kapitalGr: number;
+  nadplataGr: number;
+  odsetkiGr: number;
+  rataGr: number;
+  saldoGr: number;
+  stopaRoczna: number;
+}
+
+export interface Harmonogram {
+  raty: Rata[];
+  sumaOdsetekGr: number;
 }
 
 export function policzHarmonogram(parametry: ParametryKredytu): never {

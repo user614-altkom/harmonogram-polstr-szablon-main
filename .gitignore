@@ -5,6 +5,7 @@ out/
 .work/
 dist/
 coverage/
+*.log
 .env*
 *.tsbuildinfo
 next-env.d.ts

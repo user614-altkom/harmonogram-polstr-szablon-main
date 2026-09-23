@@ -30,6 +30,7 @@ function parsujParametry(szukane: URLSearchParams): ParametryKredytu | string {
     wskaznik,
     typRat,
     pierwszaRata,
+    nadplaty: [],
   };
 }
 
