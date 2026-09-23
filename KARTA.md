@@ -16,7 +16,7 @@ Pracujesz sam, w swoim prywatnym repo, w VS Code z Copilotem (tryb Agent) albo w
 
 - [x] `.specify/memory/constitution.md` wypełniony
 - [x] `specs/001-*/spec.md`, `plan.md`, `tasks.md` w repo
-- [ ] PR #1 z artefaktami, Copilot jako recenzent, komentarz bota Vercel z adresem podglądu, review przeczytane, PR scalony
+- [x] PR #1 z artefaktami, Copilot jako recenzent, komentarz bota Vercel z adresem podglądu, review przeczytane, PR scalony
 
 ### Bramka 2, do 15:00: MVP na produkcji
 
