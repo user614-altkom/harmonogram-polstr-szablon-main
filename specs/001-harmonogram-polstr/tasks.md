@@ -21,7 +21,6 @@ niezależną walidacją oraz osobnym pull requestem i review przed przejściem d
   zależy od nieukończonego zadania.
 - **[US1]–[US4]**: Historia użytkownika ze `spec.md`.
 - Każde zadanie wskazuje dokładną ścieżkę pliku.
-
 ## Faza 1: Przygotowanie
 
 **Cel**: Potwierdzenie działającego punktu startowego bez zmiany zależności.
@@ -33,15 +32,13 @@ pokaż diff i przeprowadź review przed fazą 2.
 
 ---
 
-## Faza 2: Fundament wspólny
-
 **Cel**: Ustalenie typów i niezmienników współdzielonych przez wszystkie historie.
 
 **KRYTYCZNE**: Żadna historia użytkownika nie może rozpocząć implementacji przed
 ukończeniem tej fazy.
 
-- [ ] T002 Zdefiniuj w `src/domena/harmonogram.ts` typy `ParametryKredytu`, `WpisSerii`, `Nadplata`, `Rata` i `Harmonogram` z regułami: `kwotaGr` i `liczbaRat` to dodatnie liczby całkowite; `pierwszaRata` oraz `od` to istniejące daty `YYYY-MM-DD`; wpisy serii są rosnące bez duplikatów; `marza` i `stopa` to skończone liczby nieujemne jako ułamki; `typRat` to `rowne` albo `malejace`; `wskaznik` to `POLSTR_1M` albo `WIBOR_3M`; `nadplaty` domyślnie są pustą listą; `miesiac` jest od 1 do `liczbaRat`; `kwotaGr` nadpłaty jest dodatnią liczbą całkowitą; `tryb` to `obniz_rate` albo `skroc_okres`; `numer` raty rośnie od 1 bez luk; `kapitalGr`, `nadplataGr`, `odsetkiGr`, `rataGr`, `saldoGr` i `sumaOdsetekGr` są nieujemnymi całkowitymi groszami; `rataGr = kapitalGr + odsetkiGr`; `stopaRoczna` jest nieujemnym ułamkiem; lista `raty` ma co najmniej jeden element dla poprawnych parametrów
-- [ ] T002a Zaktualizuj fixture domeny w `tests/smoke.test.ts`, przekazując wymagane `nadplaty: []` zgodnie z typem `ParametryKredytu`
+- [X] T002 Zdefiniuj w `src/domena/harmonogram.ts` typy `ParametryKredytu`, `WpisSerii`, `Nadplata`, `Rata` i `Harmonogram` z regułami: `kwotaGr` i `liczbaRat` to dodatnie liczby całkowite; `pierwszaRata` oraz `od` to istniejące daty `YYYY-MM-DD`; wpisy serii są rosnące bez duplikatów; `marza` i `stopa` to skończone liczby nieujemne jako ułamki; `typRat` to `rowne` albo `malejace`; `wskaznik` to `POLSTR_1M` albo `WIBOR_3M`; `nadplaty` domyślnie są pustą listą; `miesiac` jest od 1 do `liczbaRat`; `kwotaGr` nadpłaty jest dodatnią liczbą całkowitą; `tryb` to `obniz_rate` albo `skroc_okres`; `numer` raty rośnie od 1 bez luk; `kapitalGr`, `nadplataGr`, `odsetkiGr`, `rataGr`, `saldoGr` i `sumaOdsetekGr` są nieujemnymi całkowitymi groszami; `rataGr = kapitalGr + odsetkiGr`; `stopaRoczna` jest nieujemnym ułamkiem; lista `raty` ma co najmniej jeden element dla poprawnych parametrów
+- [X] T002a Zaktualizuj fixture domeny w `tests/smoke.test.ts`, przekazując wymagane `nadplaty: []` zgodnie z typem `ParametryKredytu`
 
 **Punkt kontrolny**: Kontrakty TypeScript odzwierciedlają `data-model.md`; zakończ fazę,
 pokaż diff i przeprowadź review przed fazą 3.
@@ -50,15 +47,8 @@ pokaż diff i przeprowadź review przed fazą 3.
 
 ## Faza 3: Historia użytkownika 1 - Obliczenie harmonogramu bazowego (Priorytet: P1) MVP
 
-**Cel**: Obliczenie bazowego harmonogramu rat równych, walidacja wejścia i odpowiedź API.
-
 **Test niezależny**: Dla 40 000 000 gr, 300 rat, stałego wskaźnika `0.0355` i marży
 `0.0211` pierwsza rata wynosi 249 472 gr z tolerancją 5 gr, ostatnia 249 253 gr, suma
-kapitału wynosi 40 000 000 gr, a saldo końcowe 0.
-
-### Testy historii 1
-
-- [ ] T003 [P] [US1] Napisz nieprzechodzące testy liczby kontrolnej, zerowej stopy, raty wyrównującej i sumy kapitału w `tests/harmonogram-rowne.test.ts`
 - [ ] T004 [P] [US1] Napisz nieprzechodzące testy odrzucenia niedodatniej kwoty i liczby rat, ujemnej albo nieskończonej marży, nieistniejącej daty oraz generowania końców miesięcy w UTC w `tests/harmonogram-walidacja.test.ts`
 
 ### Implementacja historii 1
@@ -74,13 +64,8 @@ przeprowadź review przed rozpoczęciem historii P2.
 
 ---
 
-## Faza 4: Historia użytkownika 2 - Porównanie typów rat i wskaźników (Priorytet: P2)
-
 **Cel**: Obsługa rat malejących, zmian POLSTR 1M i WIBOR 3M oraz wartości po końcu serii.
 
-**Test niezależny**: Dla tych samych parametrów można zmienić wyłącznie typ raty lub
-wskaźnik i otrzymać poprawnie różniące się raty oraz sumę odsetek; zmiana wpisu serii
-obowiązuje od daty raty, a ostatnia wartość obowiązuje po końcu serii.
 
 ### Testy historii 2
 
@@ -96,13 +81,8 @@ obowiązuje od daty raty, a ostatnia wartość obowiązuje po końcu serii.
 **Punkt kontrolny**: Oba typy rat i oba wskaźniki są testowalne niezależnie od nadpłat;
 zakończ fazę, pokaż diff i przeprowadź review.
 
----
-
 ## Faza 5: Historia użytkownika 3 - Uwzględnienie nadpłat (Priorytet: P2)
 
-**Cel**: Zastosowanie nadpłat po racie w trybie obniżenia raty albo skrócenia okresu.
-
-**Test niezależny**: Ta sama nadpłata w trybie `obniz_rate` zachowuje termin i obniża
 przyszłe raty, a w trybie `skroc_okres` zmniejsza liczbę rat; nadpłata ponad saldo kończy
 harmonogram bez wartości ujemnych.
 
@@ -117,9 +97,6 @@ harmonogram bez wartości ujemnych.
 - [ ] T017 [US3] Zaimplementuj parsowanie parametru `nadplaty` jako tablicy JSON, konwersję dodatnich kwot ze złotych na grosze i komunikaty dla niepoprawnego miesiąca, kwoty lub trybu w `app/api/harmonogram/route.ts`
 - [ ] T018 [US3] Wykonaj oba scenariusze nadpłat i przypadek nadpłaty ponad saldo z `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
 
-**Punkt kontrolny**: Oba tryby nadpłat przechodzą testy bez naruszenia historii 1 i 2;
-zakończ fazę, pokaż diff i przeprowadź review.
-
 ---
 
 ## Faza 6: Historia użytkownika 4 - Prezentacja i eksport wyniku (Priorytet: P3)
@@ -127,28 +104,18 @@ zakończ fazę, pokaż diff i przeprowadź review.
 **Cel**: Responsywny formularz, podsumowanie, kompletna tabela oraz eksport CSV w przeglądarce.
 
 **Test niezależny**: Dla gotowej odpowiedzi API ekran pokazuje pierwszą i ostatnią ratę,
-sumę odsetek oraz wszystkie raty, a CSV ma nagłówek i dokładnie tyle rekordów co tabela.
-
-### Implementacja historii 4
 
 - [ ] T019 [US4] Zaimplementuj w `app/page.tsx` komponent `'use client'` z formularzem wszystkich parametrów i nadpłat, `URLSearchParams`, pobieraniem `/api/harmonogram`, stanami ładowania i błędu, podsumowaniem oraz responsywną tabelą bez biblioteki UI
 - [ ] T020 [US4] Zaimplementuj w `app/page.tsx` eksport aktualnego wyniku do CSV przez `Blob`, z polskimi nagłówkami, wszystkimi wymaganymi kolumnami i wszystkimi ratami w kolejności harmonogramu
 - [ ] T021 [US4] Wykonaj scenariusz prezentacji i CSV na szerokości desktopowej oraz mobilnej z `specs/001-harmonogram-polstr/quickstart.md` i odnotuj zgodność liczby wierszy w opisie PR
-
 **Punkt kontrolny**: Pełny zakres MVP działa end-to-end; zakończ fazę, pokaż diff i
 przeprowadź review przed pracami przekrojowymi.
 
 ---
 
-## Faza 7: Dopracowanie i wymagania przekrojowe
-
-**Cel**: Domknięcie przypadków granicznych, dokumentacji i bramek wydania.
-
 - [ ] T022 [P] Dodaj test czasu obliczenia 300 rat poniżej 5 sekund oraz regresje dla dat końca miesiąca i salda końcowego w `tests/harmonogram-granice.test.ts`
 - [ ] T023 [P] Zaktualizuj instrukcję uruchomienia, parametry API, przykłady nadpłat i eksport CSV w `./README.md`
-- [ ] T024 Uruchom pełne `npm test`, `npm run typecheck`, `npm run build` oraz wszystkie scenariusze z `specs/001-harmonogram-polstr/quickstart.md`, a wyniki odnotuj w opisie końcowego PR
 
-**Punkt kontrolny**: Wszystkie bramki są zielone, dokumentacja odpowiada kontraktowi,
 a funkcja jest gotowa do wdrożenia i review.
 
 ---
@@ -227,12 +194,7 @@ Sekwencyjnie: T019 → T020 → T021, ponieważ zadania modyfikują `app/page.ts
 2. Ukończ US1 w fazie 3.
 3. Zatrzymaj się i zweryfikuj liczbę kontrolną, błędy wejścia oraz endpoint.
 4. Wydaj albo zademonstruj bazowy harmonogram przed rozszerzaniem zakresu.
-
-### Dostarczanie przyrostowe
-
-1. Fundament + US1: bazowe raty równe i działający endpoint.
 2. US2: oba typy rat i oba wskaźniki.
-3. US3: oba tryby nadpłat.
 4. US4: ekran i eksport CSV.
 5. Dopracowanie: regresje, dokumentacja i pełna bramka wydania.
 
