@@ -64,7 +64,7 @@ kapitału wynosi 40 000 000 gr, a saldo końcowe 0.
 
 - [ ] T005 [US1] Zaimplementuj walidację parametrów oraz deterministyczne wyznaczanie miesięcznych dat z ograniczeniem do ostatniego dnia miesiąca w `src/domena/harmonogram.ts`
 - [ ] T006 [US1] Zaimplementuj raty równe dla stałej serii, odsetki `round(saldo * stopaRoczna / 12)`, jednorazowe zaokrąglanie do grosza i ostatnią ratę wyrównującą w `src/domena/harmonogram.ts`
-- [ ] T007 [US1] Zaimplementuj bazowy kontrakt GET: konwersję złotych na grosze i punktów procentowych na ułamek, pobranie serii, wywołanie domeny oraz odpowiedzi 200/400 zgodne z `contracts/openapi.yaml` w `app/api/harmonogram/route.ts`
+- [ ] T007 [US1] Zaimplementuj bazowy kontrakt GET: konwersję złotych na grosze i punktów procentowych na ułamek, pobranie serii i przekazanie jej jako argumentu do domeny, wywołanie domeny oraz odpowiedzi 200/400 zgodne z `contracts/openapi.yaml` w `app/api/harmonogram/route.ts`
 - [ ] T008 [US1] Wykonaj scenariusze liczby kontrolnej i błędów wejścia opisane w `specs/001-harmonogram-polstr/quickstart.md` oraz odnotuj wyniki w opisie PR
 
 **Punkt kontrolny**: Historia 1 działa samodzielnie jako MVP; zakończ fazę, pokaż diff i
